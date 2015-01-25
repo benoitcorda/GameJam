@@ -5,11 +5,12 @@
 	public enum State : int {
 		Chatty = 3,
 		Clingy = 4,
+		Sequence = 2,
 	};
 
 	// The current level state; that is, which level to go to next.
 	public static State levelState = LevelState.State.Chatty;
 
 	// The intro level sequence that depends on the state.
-	public static State levelSequence = 2;
+	public static State levelSequence = LevelState.State.Sequence;
 }
