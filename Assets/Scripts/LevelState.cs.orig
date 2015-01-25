@@ -3,9 +3,13 @@
 	// The possible level states. These must match up with the 
 	// scene numbering in the build settings.
 	public enum State : int {
+<<<<<<< Updated upstream
 		Chatty = 3,
 		Clingy = 4,
 		Sequence = 2,
+=======
+		Chatty = 2,
+		Clingy = 3,
 		
 		// Hacky states for the scenes after levels.
 		ChattySad,
@@ -14,6 +18,7 @@
 		ClingySad,
 		ClingyIndifferent,
 		ClingyHappy,
+>>>>>>> Stashed changes
 	};
 
 	// The current level state; that is, which level to go to next.

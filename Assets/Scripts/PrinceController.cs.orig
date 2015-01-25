@@ -57,6 +57,16 @@ public class PrinceController : MonoBehaviour
 	void ChooseNewEntryLevel()
 	{
 		if  (moodAverage <= 0.33333333333334) {
+<<<<<<< Updated upstream
+			LevelState.levelState = LevelState.State.Clingy;
+		} else if (moodAverage <= 0.66666666666667) {
+			LevelState.levelState = LevelState.State.Chatty;
+		} else {
+			LevelState.levelState = LevelState.State.Clingy;;
+		}
+
+		Application.LoadLevel((int)LevelState.levelState);
+=======
 			LevelState.levelState = LevelState.State.ClingySad;
 		} else if (moodAverage <= 0.66666666666667) {
 			LevelState.levelState = LevelState.State.ClingyIndifferent;
@@ -64,6 +74,7 @@ public class PrinceController : MonoBehaviour
 			LevelState.levelState = LevelState.State.ClingyHappy;
 		}
 		Application.LoadLevel(4);
+>>>>>>> Stashed changes
     }
     
     void UpdateMoodMeter (Vector2 v)

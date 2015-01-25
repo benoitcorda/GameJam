@@ -180,16 +180,15 @@ public class Chatty : MonoBehaviour {
 			temporarySpriteIndex = moodIndex;
 			if (moodIndex == 4) {
 				// Happy
-				LevelState.levelState = LevelState.State.Chatty;
-				//Application.LoadLevel(0);
+				LevelState.levelState = LevelState.State.ChattySad;
+				// Indifferent
 			} else if (moodIndex == 2) {
-				LevelState.levelState = LevelState.State.Clingy;
-				Application.LoadLevel(0);
+				LevelState.levelState = LevelState.State.ClingyIndifferent;
 			} else {
 				// Sad
-				LevelState.levelState = LevelState.State.Chatty;
-				//Application.LoadLevel(0);
+				LevelState.levelState = LevelState.State.ChattyHappy;
 			}
+			Application.LoadLevel(4);
 		}
 	}
 
