@@ -65,7 +65,7 @@ public class Fade : MonoBehaviour {
 		} else if (isLoadingCredits && !pauseCredit && credits.transform.position.y > 9.7f) {
 			pauseTime = 0;
 			pauseCredit = true;
-		} else if (pauseCredit && pauseTime > 0.1	f) {
+		} else if (pauseCredit && pauseTime > 0.1f) {
 			// TODO(corda): Based on global context, go to the right level.
 			Application.LoadLevel(1);
 		}
