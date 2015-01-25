@@ -58,12 +58,15 @@ public class PrinceController : MonoBehaviour
 	{
 		if  (moodAverage <= 0.33333333333334) {
 			LevelState.levelState = LevelState.State.ClingySad;
+			Application.LoadLevel(5);
 		} else if (moodAverage <= 0.66666666666667) {
 			LevelState.levelState = LevelState.State.ClingyIndifferent;
+			Application.LoadLevel(5);
 		} else {
 			LevelState.levelState = LevelState.State.ClingyHappy;
+			Application.LoadLevel(5);
 		}
-		Application.LoadLevel(4);
+		
     }
     
     void UpdateMoodMeter (Vector2 v)

@@ -183,12 +183,12 @@ public class Chatty : MonoBehaviour {
 				LevelState.levelState = LevelState.State.ChattyHappy;
 				// Indifferent
 			} else if (moodIndex == 2) {
-				LevelState.levelState = LevelState.State.ClingyIndifferent;
+				LevelState.levelState = LevelState.State.ChattyIndifferent;
 			} else {
 				// Sad
 				LevelState.levelState = LevelState.State.ChattySad;
 			}
-			Application.LoadLevel(4);
+			Application.LoadLevel(5);
 		}
 	}
 
