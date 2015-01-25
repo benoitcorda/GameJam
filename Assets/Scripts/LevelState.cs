@@ -8,5 +8,5 @@
 	};
 
 	// The current level state; that is, which level to go to next.
-	public static State levelState = 0;
+	public static State levelState = State.Chatty;
 }

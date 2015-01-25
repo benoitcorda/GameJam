@@ -172,7 +172,7 @@ public class Chatty : MonoBehaviour {
 		} else {
 			temporarySpriteIndex = Math.Max(0, oldSpriteIndex - 1);
 		}
-		Debug.Log("mood:" + mood);
+		//Debug.Log("mood:" + mood);
 		transitionTime = transitionPeriod;
 		var moodIndex = getStableSpriteIndex();
 		if (++questionIdx > questions.Length - 1) {
@@ -180,13 +180,15 @@ public class Chatty : MonoBehaviour {
 			temporarySpriteIndex = moodIndex;
 			if (moodIndex == 4) {
 				// Happy
-				Application.LoadLevel(0);
+				LevelState.levelState = LevelState.State.Chatty;
+				//Application.LoadLevel(0);
 			} else if (moodIndex == 2) {
-				// Medium
-				Application.LoadLevel(1);
+				LevelState.levelState = LevelState.State.Clingy;
+				Application.LoadLevel(0);
 			} else {
 				// Sad
-				Application.LoadLevel(0);
+				LevelState.levelState = LevelState.State.Chatty;
+				//Application.LoadLevel(0);
 			}
 		}
 	}
