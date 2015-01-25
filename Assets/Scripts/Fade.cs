@@ -12,8 +12,8 @@ public class Fade : MonoBehaviour {
 	private int scrollSpeed = 1;
 	private bool isLoadingCredits;
 	private bool pauseCredit;
-	private int[] scenarioChatty = {0, 1, 2, 3 , 4};
-	private int[] scenarioClingy = {0, 1, 2, 3 , 4};
+	private int[] scenarioChatty = {0, 1, 2, 5, 6};
+	private int[] scenarioClingy = {0, 1, 2, 3, 4};
 	private int[] currentScenario;
 
 	private Color hidden() {

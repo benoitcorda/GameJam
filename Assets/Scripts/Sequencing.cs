@@ -8,8 +8,8 @@ public class Sequencing : MonoBehaviour {
 	
 	private float time = 0f;
 	private int idx = 0;
-	private int[] scenarioChatty = {0, 1, 2, 3 , 4};
-	private int[] scenarioClingy = {0, 1, 2, 3 , 4};
+	private int[] scenarioChatty = {0, 1, 2, 3};
+	private int[] scenarioClingy = {4, 5, 6, 7};
 	private int[] currentScenario;
 	
 	private Color hidden() {
@@ -61,6 +61,6 @@ public class Sequencing : MonoBehaviour {
 	}
 
 	void loadNextLevel () {
-		Application.LoadLevel(1);
+		Application.LoadLevel((int)LevelState.levelState);
 	}
 }
