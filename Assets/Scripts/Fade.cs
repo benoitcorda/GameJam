@@ -9,6 +9,7 @@ public class Fade : MonoBehaviour {
 	private float time = 0f;
 	private float pauseTime = 0f;
 	private int idx = 0;
+	private int scrollSpeed = 1;
 	private bool isLoadingCredits;
 	private bool pauseCredit;
 	private int[] scenrio1 = {0, 1, 2, 3 , 4};
@@ -44,7 +45,7 @@ public class Fade : MonoBehaviour {
 
 		if (isLoadingCredits && !pauseCredit) {
 			Vector3 position = credits.transform.position;
-			credits.transform.position = new Vector3(position.x, position.y + 0.05f, position.z);
+			credits.transform.position = new Vector3(position.x, position.y + 0.05f*scrollSpeed, position.z);
 		}
 
 		// Switch to the next scene if needed.
@@ -68,6 +69,10 @@ public class Fade : MonoBehaviour {
 		} else if (pauseCredit && pauseTime > 0.1f) {
 			// TODO(corda): Based on global context, go to the right level.
 			Application.LoadLevel(1);
+		}
+
+		if (Input.GetButtonDown("Jump") && isLoadingCredits) {
+			scrollSpeed++;
 		}
 	}
 
