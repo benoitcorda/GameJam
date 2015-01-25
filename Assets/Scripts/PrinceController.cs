@@ -18,9 +18,12 @@ public class PrinceController : MonoBehaviour
     private float moodCurrent;
     public int direction;
     public float maxSpeed;
+	public float levelDuration;
+    
     public GameObject moodMeter;
     public GameObject needle;
     public GameObject princess;
+
     private SpriteRenderer spriteRenderer;          // Reference to the player's animator component.
     private SpriteRenderer moodSpriteRenderer;          // Reference to the player's animator component.
     private Sprite[] sprites;
@@ -30,17 +33,20 @@ public class PrinceController : MonoBehaviour
     private States state;
     private string playerNumber;
     private float[] thresholds;
-
+	private float levelTimer;
+    
     // Use this for initialization
     void Start ()
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer> ();
         moodSpriteRenderer = moodMeter.GetComponent<SpriteRenderer> ();
 
-        sprites = Resources.LoadAll<Sprite> ("clingy/Princess-Sprite");
+        sprites = Resources.LoadAll<Sprite> ("clingy/Prince-Sprite");
         moodSprites = Resources.LoadAll<Sprite> ("clingy/Princess-Meter");
 
         moodAverage = 1.0f;
+		
+		levelTimer = levelDuration;
     }
 
     void OnCollisionEnter2D (Collision2D collision)
@@ -48,16 +54,28 @@ public class PrinceController : MonoBehaviour
 
     }
 
+	void ChooseNewEntryLevel()
+	{
+		if  (moodAverage <= 0.33333333333334) {
+			Application.LoadLevel (0);
+		} else if (moodAverage <= 0.66666666666667) {
+			Application.LoadLevel (1);
+		} else {
+			Application.LoadLevel (2);
+		}
+
+    }
+    
     void UpdateMoodMeter (Vector2 v)
     {
         float delta = 0.003f;
-        float maxAngle = 40.0f;
-        thresholds = new float[]{4.0f, 8.0f, 12.0f};
+        float maxAngle = 50.0f;
+        thresholds = new float[]{1.0f, 4.0f, 8.0f, 12.0f};
 
         var ppVector = (princess.transform.position - gameObject.transform.position);
 
         float distance = (ppVector).magnitude;
-        float moodDelta = (distance < thresholds[0] ? +1 : (distance < thresholds[1] ? 0 : -1));
+        float moodDelta = (distance < thresholds[1] ? +1 : (distance < thresholds[2] ? 0 : -1));
 
         var tendency = 0;
         if ((v.magnitude > 1e-4) && (ppVector.magnitude > 1e-4))
@@ -66,22 +84,32 @@ public class PrinceController : MonoBehaviour
             tendency = (Vector2.Dot(v, ppVector) >= 0 ? +1 : -1);
         }
         
-        moodAverage = Mathf.Max(0.0f, Mathf.Min(1.0f, moodAverage + delta * moodDelta));
-
-        if (moodAverage <= 0.33333) {
-            moodSpriteRenderer.sprite = moodSprites [tendency==1 ? 1 : 0];
-        } else if (moodAverage <= 0.6666) {
-            moodSpriteRenderer.sprite = moodSprites [tendency==-1 ? 1 : (tendency==0 ? 2 : 3)];
-        } else {
-            moodSpriteRenderer.sprite = moodSprites [tendency==-1 ? 3 : 4];
+        if (distance < thresholds[0]) // spike mood if we touch
+        {
+          moodAverage = 1.0f;
+        }
+        else 
+        {
+          moodAverage = Mathf.Max(0.0f, Mathf.Min(1.0f, moodAverage + delta * moodDelta));
         }
 
-        print ("distance:" + distance + " moodDelta:" + moodDelta + "avg:" + moodAverage + "tendency: " + tendency);
-
+        if (moodAverage <= 0.16666666666667) {
+            moodSpriteRenderer.sprite = moodSprites [0];
+        } else if (moodAverage <= 0.33333333333334) {
+            moodSpriteRenderer.sprite = moodSprites [1];
+        } else if (moodAverage <= 0.66666666666667) {
+            moodSpriteRenderer.sprite = moodSprites [2];
+        } else if (moodAverage <= 0.83333333333333) {
+            moodSpriteRenderer.sprite = moodSprites [3];
+        } else {
+            moodSpriteRenderer.sprite = moodSprites [4];
+        }
 
         // change needle
-        float needleAngle = Mathf.Lerp(-maxAngle, maxAngle, distance / thresholds[2]);
+        float needleAngle = Mathf.Lerp(-maxAngle, maxAngle, distance / thresholds[3]);
         needle.transform.eulerAngles = new Vector3(0.0f, 0.0f, needleAngle);
+
+//        print ("distance:" + distance + " moodDelta:" + moodDelta + "avg:" + moodAverage + "needle: " + needleAngle);
     }
 
     void UpdateHeroState (float x, float y)
@@ -121,22 +149,22 @@ public class PrinceController : MonoBehaviour
         if (newState != state) {
             switch (newState) {
             case States.Up: 
-                spriteRenderer.sprite = sprites [10];
+                spriteRenderer.sprite = sprites [5];
                 break;
             case States.Down:
-                spriteRenderer.sprite = sprites [6];
+                spriteRenderer.sprite = sprites [0];
                 break;
             case States.Left:
-                spriteRenderer.sprite = sprites [14];
+                spriteRenderer.sprite = sprites [15];
                 break;
             case States.Right:
-                spriteRenderer.sprite = sprites [7];
+                spriteRenderer.sprite = sprites [11];
                 break;
             case States.StillRight:
             case States.StillLeft:
             case States.StillUp:
             case States.StillDown:
-                spriteRenderer.sprite = sprites [5];
+                spriteRenderer.sprite = sprites [0];
                 break;
             }
 
@@ -172,5 +200,15 @@ public class PrinceController : MonoBehaviour
 
             state = States.StillDown;
         }
+
+		
+		
+		// update level timer
+		levelTimer -= Time.deltaTime;
+		if (levelTimer <= 0.0f) {
+            ChooseNewEntryLevel();
+        }
+		
+
     }
 }
