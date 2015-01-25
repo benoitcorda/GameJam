@@ -61,6 +61,6 @@ public class Sequencing : MonoBehaviour {
 	}
 
 	void loadNextLevel () {
-		Application.LoadLevel(1);
+		Application.LoadLevel((int)LevelState.levelState);
 	}
 }
