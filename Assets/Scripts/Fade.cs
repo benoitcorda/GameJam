@@ -7,8 +7,10 @@ public class Fade : MonoBehaviour {
 	public SpriteRenderer credits;
 
 	private float time = 0f;
+	private float pauseTime = 0f;
 	private int idx = 0;
 	private bool isLoadingCredits;
+	private bool pauseCredit;
 	private int[] scenrio1 = {0, 1, 2, 3 , 4};
 	private int[] scenrio2 = {0, 3, 2, 1};
 	private int[] scenrio3 = {3, 2, 3, 2};
@@ -27,6 +29,7 @@ public class Fade : MonoBehaviour {
 		// TODO(corda): Based on global context.
 		currentScenario = scenrio1;
 		isLoadingCredits = false;
+		pauseCredit = false;
 	}
 
 	void Update() {
@@ -39,8 +42,14 @@ public class Fade : MonoBehaviour {
 		
 		currentSprite.color = Color.Lerp (hidden (), shown (), interpolation);
 
+		if (isLoadingCredits && !pauseCredit) {
+			Vector3 position = credits.transform.position;
+			credits.transform.position = new Vector3(position.x, position.y + 0.05f, position.z);
+		}
+
 		// Switch to the next scene if needed.
 		time += Time.deltaTime;
+		pauseTime += Time.deltaTime;
 		if ((time > sceneLength || Input.GetButtonDown("Jump")) && idx < currentScenario.Length) {
 			idx++;
 			time = 0;
@@ -53,7 +62,10 @@ public class Fade : MonoBehaviour {
 				var newIdx = currentScenario[idx];
 				renderers[newIdx].sortingOrder = currentSprite.sortingOrder + 1;
 			}
-		} else if (time > sceneLength && isLoadingCredits) {
+		} else if (isLoadingCredits && !pauseCredit && credits.transform.position.y > 9.7f) {
+			pauseTime = 0;
+			pauseCredit = true;
+		} else if (pauseCredit && pauseTime > 0.1	f) {
 			// TODO(corda): Based on global context, go to the right level.
 			Application.LoadLevel(1);
 		}
@@ -63,7 +75,8 @@ public class Fade : MonoBehaviour {
 		isLoadingCredits = true;
 
 		credits.sortingOrder = renderers[lastSpriteIdx].sortingOrder + 1;
-
+		Vector3 position = credits.transform.position;
+		credits.transform.position = new Vector3(position.x, -9.4f, position.z);
 	}
 
 }
