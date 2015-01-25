@@ -55,30 +55,39 @@ public class Chatty : MonoBehaviour {
 			"Hello, my darling.",
 			"Hey.",
 			"(Head Nod)",
-			"What was that darling?",
+			
+			"What was that, darling?",
 			"They seem nice.",
 			"The blue ones are quite striking, but pale in comparison to your beautiful eyes.",
+			
 			"Nice.",
 			"Nice!",
 			"Noice!",
+			
 			"Then we should go with the silk ones. They do seem warmer.",
 			"Cool with me.",
 			"Honestly, I could not care less.",
+			
 			"Do I have a choice?",
 			"Of course! I know you and the Eriksens are like besties.",
 			"You know how I feel about crustaceans. How is that not like eating giant insects?",
+			
 			"Yes.",
 			"No.",
 			"Well, we kind of did when we visited your aunt last week...",
+			
 			"Yes.",
 			"Not more than usual.",
 			"You make the robe look good.",
+
 			"That's wonderful, darling!",
 			"That bitch crazy.",
 			"...",
+
 			"Some people work things out and some just don't know how to change.",
 			"Let's don't wait 'til the water runs dry.",
 			"This stream dried up a long time ago, baby.",
+
 			"Yes.",
 			"No.",
 			"Define \"happy\".",
@@ -87,30 +96,39 @@ public class Chatty : MonoBehaviour {
 			2,
 			1,
 			0,
+			
 			0,
 			1,
 			2,
+			
 			0,
 			1,
 			2,
+			
 			2,
 			1,
 			0,
+			
 			0,
 			2,
 			1,
-			0,
-			2,
-			1,
-			1,
-			0,
-			2,
+			
 			2,
 			0,
 			1,
+			
 			1,
+			0,
+			2,
+			
 			2,
 			0,
+			1,
+			
+			2,
+			0,
+			1,
+			
 			2,
 			0,
 			1,
@@ -179,73 +197,60 @@ public class Chatty : MonoBehaviour {
 	    }
 		GUI.skin.button.wordWrap = true;
 		
+		// Clear button backgrounds.
 		GUI.backgroundColor = new Color(1,1,1,0);
-		GUI.skin.label.fontSize = Screen.width / 55;
-		GUI.skin.button.fontSize = GUI.skin.label.fontSize;
+		
+		// Make the font
+		GUI.skin.label.fontSize = Screen.width / 31;
+		GUI.skin.button.fontSize = Screen.width / 40;
 		GUI.skin.label.font = font;
 		GUI.skin.button.font = GUI.skin.label.font;
-		GUI.contentColor = new Color(.1f,.1f,.1f,1);
+		
+		// Default text color.
+		var labelAndHighlightColor = new Color(0.184f, 0.341f, 0.498f, 1);
+		GUI.contentColor = labelAndHighlightColor;
+		
+		// Text alignment.
 		GUI.skin.label.alignment = TextAnchor.MiddleCenter;
+		GUI.skin.button.alignment = TextAnchor.MiddleLeft;
 		
-		int padding = Screen.width/22;
-		
+		// Pad the label and buttons.
+		int padding = Screen.width/25;
 		GUI.skin.label.padding = new RectOffset(padding, padding, 0, 0);
 		GUI.skin.button.padding = new RectOffset(padding, padding, 0, 0);
-		var buttonAreaSize = new Vector2(Screen.width*.52f, Screen.height*.30f);
-
+		
+		// Display the question label.
+		var buttonAreaSize = new Vector2(Screen.width*.575f, Screen.height*.45f);
 		GUI.Label(new Rect(0,
 						   Screen.height - buttonAreaSize.y,
 		                   Screen.width - buttonAreaSize.x - Screen.width * .05f,
 		                   buttonAreaSize.y - padding/2), 
 		           questions[questionIdx]);
 
-		// Update the buttons.
+		// Display/update the buttons.
 		var buttonIndex = -1;
 		GUILayout.BeginArea(new Rect(Screen.width - buttonAreaSize.x,
 		                             Screen.height - buttonAreaSize.y,
 		                             buttonAreaSize.x,
 		                             buttonAreaSize.y));  
-		GUILayout.BeginVertical(); 
-		GUILayout.Space(padding/2);  
-		
-		if (hoverOnButton[0]) {
-			GUI.contentColor = new Color(.6f,.6f,.6f,1);
-		} else {
-			GUI.contentColor = new Color(.1f,.1f,.1f,1);
+		GUI.skin.button.margin = new RectOffset(0,0,0,0);
+		GUILayout.BeginVertical();
+		var numButtons = 3;
+		for (int i=0; i<numButtons; i++) {
+			// Sets the hover color of a button.
+			if (hoverOnButton[i]) {
+				GUI.contentColor = labelAndHighlightColor;
+			} else {
+				GUI.contentColor = new Color(0.427f,0.431f,0.439f,1);
+			}
+			if (GUILayout.Button(answers[questionIdx*numButtons+i], GUILayout.Height(buttonAreaSize.y/3))) {
+				buttonIndex = i;
+			}
+			if (Event.current.type == EventType.Repaint) {
+				hoverOnButton[i] = GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition);
+			}
 		}
-		if (GUILayout.Button(answers[questionIdx*3])) {
-			buttonIndex = 0;
-		}
-		if (Event.current.type == EventType.Repaint) {
-			hoverOnButton[0] = GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition);
-		}
-		
-		GUILayout.Space(padding/2);
-		if (hoverOnButton[1]) {
-			GUI.contentColor = new Color(.6f,.6f,.6f,1);
-		} else {
-			GUI.contentColor = new Color(.1f,.1f,.1f,1);
-		}
-		if (GUILayout.Button(answers[questionIdx*3+1])) {
-			buttonIndex = 1;
-		}
-		if (Event.current.type == EventType.Repaint) {
-			hoverOnButton[1] = GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition);
-		}
-		
-		GUILayout.Space(padding/2);  
-		if (hoverOnButton[2]) {
-			GUI.contentColor = new Color(.6f,.6f,.6f,1);
-		} else {
-			GUI.contentColor = new Color(.1f,.1f,.1f,1);
-		}
-		if (GUILayout.Button(answers[questionIdx*3+2])) {
-			buttonIndex = 2;
-		}
-		if (Event.current.type == EventType.Repaint) {
-			hoverOnButton[2] = GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition);
-		}
-		
+
 		GUILayout.EndVertical();
 		GUILayout.EndArea();
 
