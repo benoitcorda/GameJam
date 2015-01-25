@@ -57,13 +57,14 @@ public class PrinceController : MonoBehaviour
 	void ChooseNewEntryLevel()
 	{
 		if  (moodAverage <= 0.33333333333334) {
-			Application.LoadLevel (0);
+			LevelState.levelState = LevelState.State.Clingy;
 		} else if (moodAverage <= 0.66666666666667) {
-			Application.LoadLevel (1);
+			LevelState.levelState = LevelState.State.Chatty;
 		} else {
-			Application.LoadLevel (2);
+			LevelState.levelState = LevelState.State.Clingy;;
 		}
 
+		Application.LoadLevel((int)LevelState.levelState);
     }
     
     void UpdateMoodMeter (Vector2 v)
