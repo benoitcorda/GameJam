@@ -4,6 +4,6 @@ using System.Collections;
 public class Start : MonoBehaviour {
 
 	public void OnStartClicked() {
-		Application.LoadLevel((int)LevelState.levelState);
+		Application.LoadLevel((int)LevelState.levelSequence);
 	}
 }
