@@ -4,7 +4,7 @@
 	// scene numbering in the build settings.
 	public enum State : int {
 		Chatty = 2,
-		Clingy,
+		Clingy = 3,
 	};
 
 	// The current level state; that is, which level to go to next.
