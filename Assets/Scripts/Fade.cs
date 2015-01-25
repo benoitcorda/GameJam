@@ -43,7 +43,7 @@ public class Fade : MonoBehaviour {
 	void Update() {
 		var sceneLength = 5f;
 		var currentIdx = idx < currentScenario.Length ? currentScenario[idx] : 0;
-		var currentSprite = isLoadingCredits ? credits : renderers [currentIdx];
+		var currentSprite = isLoadingCredits ? credits : renderers[currentIdx];
 
 		// Set the colors on the previous and current scenes.
 		var interpolation = Mathf.Min(time/transitionTime, 1);
